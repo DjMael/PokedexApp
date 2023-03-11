@@ -1,0 +1,3 @@
+interface IPokemonCard {
+    pokemon: IPokemonResponse;
+}
