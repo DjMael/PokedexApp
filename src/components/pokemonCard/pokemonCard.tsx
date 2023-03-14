@@ -23,13 +23,12 @@ const PokemonCard = ({pokemon}: {pokemon: IPokemonResponse}) => {
     <Pressable
       style={{...styles.card, backgroundColor: typeColor}}
       onPress={() => navigation.navigate('Pokemon', {pokemon: pokemon})}>
-      <View>
+      <View style={{margin: 15}}>
         <Text
           style={{
             ...TextDefault.text,
             color: ColorDefault.white,
             fontSize: 16,
-            margin: 10,
           }}>
           {pokemon.name}
         </Text>

@@ -1,3 +1,4 @@
+import {useCallback, useLayoutEffect, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -5,10 +6,9 @@ import {
   View,
 } from 'react-native';
 import Header from '../../components/header/header';
-import ColorDefault from '../../styles/ColorDefault';
-import {useCallback, useLayoutEffect, useState} from 'react';
-import PokemonService from '../../services/PokemonService';
 import PokemonCard from '../../components/pokemonCard/pokemonCard';
+import PokemonService from '../../services/PokemonService';
+import ColorDefault from '../../styles/ColorDefault';
 
 const Pokedex = () => {
   const [pokemonList, SetPokemonList] = useState<Array<IPokemonResponse>>([]);
@@ -56,7 +56,7 @@ const Pokedex = () => {
 
   return (
     <View style={{backgroundColor: ColorDefault.white, flex: 1}}>
-      <Header />
+      <Header title="Pokedex" />
       <FlatList
         data={pokemonList}
         numColumns={2}

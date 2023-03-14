@@ -1,10 +1,10 @@
 import React from 'react';
-import {Alert, Text, View, Image} from 'react-native';
+import {Alert, Image, Text, View} from 'react-native';
 import Button from '../../components/button/button';
 import Search from '../../components/search/search';
-import styles from './styles';
 import ColorDefault from '../../styles/ColorDefault';
 import TextDefault from '../../styles/TextDefault';
+import styles from './styles';
 
 const Home = ({navigation}: any) => {
   return (
