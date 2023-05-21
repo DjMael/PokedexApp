@@ -1,21 +1,23 @@
-import {View, Text, Image, FlatList, Pressable} from 'react-native';
-import styles from './styles';
-import ColorDefault from '../../styles/ColorDefault';
-import {memo, useEffect, useState} from 'react';
-import getTypeColor from '../../utils/typesColor';
-import TextDefault from '../../styles/TextDefault';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack/lib/typescript/src/types';
+import {memo, useLayoutEffect, useState} from 'react';
+import {FlatList, Image, Pressable, Text, View} from 'react-native';
+import ColorDefault from '../../styles/ColorDefault';
+import TextDefault from '../../styles/TextDefault';
 import {RootStackParamList} from '../../types/navigationTypes';
+import getTypeColor from '../../utils/typesColor';
 import PokemonType from '../pokemonType/pokemonType';
+import styles from './styles';
 
-const PokemonCard = ({pokemon}: {pokemon: IPokemonResponse}) => {
+const PokemonCard = ({pokemon}: {pokemon: IHomePokemons}) => {
   const [typeColor, setTypeColor] = useState<string>();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  useEffect(() => {
-    let type = pokemon.types.filter(q => q.slot == 1).map(s => s.type.name)[0];
+  useLayoutEffect(() => {
+    let type = pokemon.pokemon_v2_pokemontypes
+      .filter(q => q.slot == 1)
+      .map(s => s.pokemon_v2_type.name)[0];
     setTypeColor(getTypeColor(type));
   });
 
@@ -33,8 +35,10 @@ const PokemonCard = ({pokemon}: {pokemon: IPokemonResponse}) => {
           {pokemon.name}
         </Text>
         <FlatList
-          data={pokemon.types}
-          renderItem={({item}) => <PokemonType name={item.type.name} />}
+          data={pokemon.pokemon_v2_pokemontypes}
+          renderItem={({item}) => (
+            <PokemonType name={item.pokemon_v2_type.name} />
+          )}
         />
       </View>
       <Image
@@ -45,7 +49,12 @@ const PokemonCard = ({pokemon}: {pokemon: IPokemonResponse}) => {
       />
       <Image
         source={{
-          uri: pokemon.sprites.other?.['official-artwork'].front_default,
+          uri: JSON.parse(pokemon.pokemon_v2_pokemonsprites[0].sprites).other[
+            'official-artwork'
+          ].front_default.replace(
+            '/media',
+            'https://raw.githubusercontent.com/PokeAPI/sprites/master',
+          ),
         }}
         style={styles.image}
       />

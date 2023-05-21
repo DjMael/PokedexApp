@@ -1,4 +1,4 @@
-import {useCallback, useLayoutEffect, useState} from 'react';
+import {useLayoutEffect, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -11,31 +11,21 @@ import PokemonService from '../../services/PokemonService';
 import ColorDefault from '../../styles/ColorDefault';
 
 const Pokedex = () => {
-  const [pokemonList, SetPokemonList] = useState<Array<IPokemonResponse>>([]);
+  const [pokemonList, SetPokemonList] = useState<Array<IHomePokemons>>([]);
   const [limit, SetLimit] = useState<number>(20);
   const [offset, SetOffset] = useState<number>(0);
-  const [loading, SetLoading] = useState<boolean>(false);
+  const [loading, SetLoading] = useState<boolean>(true);
 
-  const fetchPokemonList = useCallback(async () => {
-    if (loading) return;
-    const genericPokemonList = await PokemonService.GetPokemons({
+  const fetchPokemonList = async () => {
+    await PokemonService.GetPokemonHomeGraph({
       limit: limit,
       offset: offset,
+    }).then(pokemon => {
+      let types = pokemon[0].pokemon_v2_pokemontypes[0];
+      console.log(types);
+      SetPokemonList([...pokemonList, ...pokemon]);
     });
-    let genericListPokemon = await forPokemon(genericPokemonList);
-    SetPokemonList([...pokemonList, ...genericListPokemon]);
     SetLoading(false);
-  }, [offset, loading]);
-
-  const forPokemon = async (
-    genericPokemonList: IBaseResponse<IBaseEntityResponse>,
-  ): Promise<Array<IPokemonResponse>> => {
-    let genericListPokemon = new Array<IPokemonResponse>();
-    for (let pk of genericPokemonList.results) {
-      let pkDetails = await PokemonService.GetPokemonById(pk.name);
-      genericListPokemon.push(pkDetails);
-    }
-    return genericListPokemon;
   };
 
   useLayoutEffect(() => {
@@ -45,12 +35,10 @@ const Pokedex = () => {
   const OnReachEnded = () => {
     SetOffset(offset + limit);
     SetLoading(true);
-    fetchPokemonList();
+    if (!loading) fetchPokemonList();
   };
 
-  const renderPokemonCard = ({
-    item: pk,
-  }: ListRenderItemInfo<IPokemonResponse>) => {
+  const renderPokemonCard = ({item: pk}: ListRenderItemInfo<IHomePokemons>) => {
     return <PokemonCard pokemon={pk} />;
   };
 

@@ -9,7 +9,8 @@ const ColorDefault =
     white: '#ffffff',
     light: '#f6f6f6',
     lightGray: '#c2c2c4',
-    black: '#1e252e'
+    black: '#1e252e',
+    pink: "#f284ad"
 }
 
 export default ColorDefault;

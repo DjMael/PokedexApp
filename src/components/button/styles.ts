@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         position: 'relative',
         overflow: 'hidden',
+        elevation: 3
     },
     text: {
         marginLeft: '5%',

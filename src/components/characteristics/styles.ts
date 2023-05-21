@@ -2,19 +2,25 @@ import { StyleSheet } from 'react-native';
 import ColorDefault from '../../styles/ColorDefault';
 import TextDefault from '../../styles/TextDefault';
 const styles = StyleSheet.create({
+    headerCaracteristics: {
+        backgroundColor: ColorDefault.white,
+        // marginTop: -10,
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
+        flexGrow: 1
+    },
     header: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginHorizontal: 30
+        justifyContent: 'space-evenly',
     },
     text:
     {
         ...TextDefault.text,
-        color: ColorDefault.black
+        color: ColorDefault.black,
+        fontSize: 16
     },
     button: {
-        backgroundColor: ColorDefault.red,
-        paddingVertical: 20,
+        paddingVertical: 30,
         paddingHorizontal: 5,
     }
 });

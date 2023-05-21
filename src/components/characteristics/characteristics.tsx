@@ -1,6 +1,5 @@
-import {useCallback, useContext, useState} from 'react';
-import {Pressable, Text, View} from 'react-native';
-import {PokemonContext} from '../../contexts/pokemonContext';
+import {useCallback, useState} from 'react';
+import {Pressable, ScrollView, Text, View} from 'react-native';
 import About from '../about/about';
 import BaseStatus from '../baseStatus/baseStatus';
 import Evolution from '../evolution/evolution';
@@ -9,8 +8,6 @@ import styles from './styles';
 
 const Characteristics = () => {
   const [screen, setScreen] = useState<string>('About');
-
-  const {specie} = useContext(PokemonContext);
 
   const verifyScreen = useCallback(() => {
     switch (screen) {
@@ -28,7 +25,7 @@ const Characteristics = () => {
   }, [screen]);
 
   return (
-    <View>
+    <View style={styles.headerCaracteristics}>
       <View style={styles.header}>
         <Pressable style={styles.button} onPress={() => setScreen('About')}>
           <Text style={styles.text}>About</Text>
@@ -45,7 +42,7 @@ const Characteristics = () => {
           <Text style={styles.text}>Moves</Text>
         </Pressable>
       </View>
-      <View>{verifyScreen()}</View>
+      <ScrollView style={{flex: 1}}>{verifyScreen()}</ScrollView>
     </View>
   );
 };

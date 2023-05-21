@@ -21,5 +21,5 @@ export type RootStackScreenProps<T extends keyof RootStackParamList> =
     NativeStackScreenProps<RootStackParamList, T>;
 
 export type PokemonParamList = {
-    pokemon: IPokemonResponse;
+    pokemon: IHomePokemons;
 };

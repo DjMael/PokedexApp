@@ -8,9 +8,9 @@ import React, {
 import {IPokemonSpecie} from '../Interfaces/Responses/IPokemonSpecie';
 
 interface PokemonContextData {
-  pokemon: IPokemonResponse | undefined;
+  pokemon: IHomePokemons | undefined;
   specie: IPokemonSpecie | undefined;
-  setPokemon: (pk: IPokemonResponse) => void;
+  setPokemon: (pk: IHomePokemons) => void;
   setSpecie: (pk: IPokemonSpecie) => void;
 }
 
@@ -19,11 +19,11 @@ export const PokemonContext = createContext<PokemonContextData>(
 );
 
 const PokemonProvider = ({children}: {children: ReactNode}) => {
-  const [pokemon, setStatePokemon] = useState<IPokemonResponse>();
+  const [pokemon, setStatePokemon] = useState<IHomePokemons>();
   const [specie, setStateSpecie] = useState<IPokemonSpecie>();
 
   const setPokemon = useCallback(
-    (pk: IPokemonResponse) => {
+    (pk: IHomePokemons) => {
       setStatePokemon(pk);
     },
     [setStatePokemon],
@@ -45,8 +45,6 @@ const PokemonProvider = ({children}: {children: ReactNode}) => {
     }),
     [setPokemon, setSpecie, pokemon, specie],
   );
-
-  console.log(contextValue);
 
   return (
     <PokemonContext.Provider value={contextValue}>

@@ -13,30 +13,27 @@ import styles from './styles';
 
 const Pokemon = ({navigation, route}: RootStackScreenProps<'Pokemon'>) => {
   const [typeColor, setTypeColor] = useState<string>();
-  const [loaded, setLoaded] = useState<boolean>(false);
-
-  const {setSpecie, specie} = useContext(PokemonContext);
+  const {setSpecie, specie, setPokemon} = useContext(PokemonContext);
 
   const fetchSpecie = async () => {
     let specieResponse = await PokemonService.GetSpecieById(
       route.params.pokemon.id,
     );
-    console.log(setSpecie);
     setSpecie(specieResponse);
-    setLoaded(true);
   };
 
   useEffect(() => {
     fetchSpecie();
+    setPokemon(route.params.pokemon);
 
-    let type = route.params.pokemon.types
+    let type = route.params.pokemon.pokemon_v2_pokemontypes
       .filter(q => q.slot == 1)
-      .map(s => s.type.name)[0];
+      .map(s => s.pokemon_v2_type.name)[0];
     setTypeColor(getTypeColor(type));
   }, []);
 
   return (
-    <View style={{backgroundColor: typeColor}}>
+    <View style={{backgroundColor: typeColor, flex: 1}}>
       <View style={{margin: 20}}>
         <Icon
           name="arrow-left"
@@ -52,8 +49,11 @@ const Pokemon = ({navigation, route}: RootStackScreenProps<'Pokemon'>) => {
         </View>
         <View style={styles.type}>
           <FlatList
-            data={route.params.pokemon.types}
-            renderItem={({item}) => <PokemonType name={item.type.name} />}
+            scrollEnabled={false}
+            data={route.params.pokemon.pokemon_v2_pokemontypes}
+            renderItem={({item}) => (
+              <PokemonType name={item.pokemon_v2_type.name} />
+            )}
             horizontal={true}
           />
           <Text style={{...TextDefault.text, color: ColorDefault.white}}>
@@ -61,11 +61,12 @@ const Pokemon = ({navigation, route}: RootStackScreenProps<'Pokemon'>) => {
           </Text>
         </View>
       </View>
-      <View style={{zIndex: 1}}>
+      <View style={{zIndex: 1, height: '25%'}}>
         <Image
           source={{
-            uri: route.params.pokemon.sprites.other?.['official-artwork']
-              .front_default,
+            uri: JSON.parse(
+              route.params.pokemon.pokemon_v2_pokemonsprites[0].sprites,
+            ).other?.['official-artwork'].front_default,
           }}
           style={styles.image}
           resizeMode={'contain'}
@@ -78,18 +79,7 @@ const Pokemon = ({navigation, route}: RootStackScreenProps<'Pokemon'>) => {
           resizeMode={'contain'}
         />
       </View>
-      <View
-        style={{
-          backgroundColor: ColorDefault.white,
-          width: '100%',
-          height: '100%',
-          top: -30,
-          paddingVertical: 30,
-          zIndex: 0,
-          borderRadius: 40,
-        }}>
-        <Characteristics />
-      </View>
+      <Characteristics />
     </View>
   );
 };
