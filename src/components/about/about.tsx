@@ -7,30 +7,35 @@ import Breeding from '../breeding/bredding';
 import styles from './styles';
 
 const About = () => {
-  const {specie, pokemon} = useContext(PokemonContext);
+  const {specie} = useContext(PokemonContext);
 
   return (
     <View style={{marginHorizontal: 20, marginVertical: 10}}>
-      <Text
-        style={{...TextDefault.text, color: ColorDefault.black, fontSize: 15}}>
-        {specie?.flavor_text_entries
-          .filter(q => q.language.name == 'en')
-          .map(q => q.flavor_text)
-          .splice(-1)}
-      </Text>
+      {specie && (
+        <Text
+          style={{
+            ...TextDefault.text,
+            color: ColorDefault.black,
+            fontSize: 15,
+          }}>
+          {specie?.pokemon_v2_pokemonspecy.pokemon_v2_pokemonspeciesflavortexts
+            .map(q => q.flavor_text)
+            .splice(-1)}
+        </Text>
+      )}
       <View style={styles.sizePokemon}>
         <View style={styles.property}>
           <Text style={styles.propertyText}>Height</Text>
           <Text style={styles.propertyText}>
-            {(pokemon?.height! * 0.328082).toFixed(2)}"(
-            {(pokemon?.height! / 10).toFixed(2)} cm)
+            {(specie?.height! * 0.328082).toFixed(2)}"(
+            {(specie?.height! / 10).toFixed(2)} cm)
           </Text>
         </View>
         <View style={styles.property}>
           <Text style={styles.propertyText}>Weight</Text>
           <Text style={styles.propertyText}>
-            {(pokemon?.weight! / 4.536).toFixed(1)} lbs(
-            {pokemon?.weight! / 10} kg)
+            {(specie?.weight! / 4.536).toFixed(1)} lbs(
+            {specie?.weight! / 10} kg)
           </Text>
         </View>
       </View>

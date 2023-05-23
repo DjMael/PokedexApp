@@ -22,3 +22,48 @@ interface IHomePokemonsTypeName {
     id: number,
     name: string
 }
+
+interface IPokemonDescrpitSpecie {
+    height: number,
+    weight: number,
+    pokemon_v2_pokemonspecy: IPokemonDescrpitSpecieDetails,
+}
+
+interface IPokemonDescrpitSpecieFlavorText {
+    flavor_text: string,
+    pokemon_v2_version: IPokemonDescrpitSpecieVersion
+}
+
+interface IPokemonDescrpitSpecieVersion {
+    name: string
+}
+
+interface IPokemonDescrpitSpecieEggGroup {
+    pokemon_v2_egggroup: IPokemonDescrpitSpecieEggGroupDescription
+}
+
+interface IPokemonDescrpitSpecieEggGroupDescription {
+    name: string
+}
+
+interface IPokemonDescrpitSpecieGrowthRate {
+    formula: string,
+    name: string
+}
+
+interface IPokemonDescrpitSpecieDetails {
+    gender_rate: number,
+    pokemon_v2_evolutionchain: IPokemonDescrpitSpecieEvolutionChain,
+    pokemon_v2_pokemonspeciesflavortexts: Array<IPokemonDescrpitSpecieFlavorText>,
+    pokemon_v2_growthrate: IPokemonDescrpitSpecieGrowthRate,
+    pokemon_v2_pokemonegggroups: Array<IPokemonDescrpitSpecieEggGroup>
+}
+
+interface IPokemonDescrpitSpecieEvolutionChain {
+    pokemon_v2_pokemonspecies: Array<IPokemonDescrpitSpecieEvolutionChainDescript>
+}
+
+interface IPokemonDescrpitSpecieEvolutionChainDescript {
+    name: string,
+    order: number
+}

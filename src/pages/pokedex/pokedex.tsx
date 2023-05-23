@@ -22,7 +22,6 @@ const Pokedex = () => {
       offset: offset,
     }).then(pokemon => {
       let types = pokemon[0].pokemon_v2_pokemontypes[0];
-      console.log(types);
       SetPokemonList([...pokemonList, ...pokemon]);
     });
     SetLoading(false);

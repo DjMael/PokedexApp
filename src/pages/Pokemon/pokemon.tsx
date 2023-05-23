@@ -6,7 +6,6 @@ import PokemonType from '../../components/pokemonType/pokemonType';
 import {PokemonContext} from '../../contexts/pokemonContext';
 import PokemonService from '../../services/PokemonService';
 import ColorDefault from '../../styles/ColorDefault';
-import TextDefault from '../../styles/TextDefault';
 import {RootStackScreenProps} from '../../types/navigationTypes';
 import getTypeColor from '../../utils/typesColor';
 import styles from './styles';
@@ -16,9 +15,10 @@ const Pokemon = ({navigation, route}: RootStackScreenProps<'Pokemon'>) => {
   const {setSpecie, specie, setPokemon} = useContext(PokemonContext);
 
   const fetchSpecie = async () => {
-    let specieResponse = await PokemonService.GetSpecieById(
+    let specieResponse = await PokemonService.GetPokemonSpecieGraph(
       route.params.pokemon.id,
     );
+    console.log(specieResponse);
     setSpecie(specieResponse);
   };
 
@@ -56,9 +56,9 @@ const Pokemon = ({navigation, route}: RootStackScreenProps<'Pokemon'>) => {
             )}
             horizontal={true}
           />
-          <Text style={{...TextDefault.text, color: ColorDefault.white}}>
+          {/* <Text style={{...TextDefault.text, color: ColorDefault.white}}>
             {specie?.genera.filter(q => q.language.name == 'en')[0].genus}
-          </Text>
+          </Text> */}
         </View>
       </View>
       <View style={{zIndex: 1, height: '25%'}}>
@@ -66,7 +66,10 @@ const Pokemon = ({navigation, route}: RootStackScreenProps<'Pokemon'>) => {
           source={{
             uri: JSON.parse(
               route.params.pokemon.pokemon_v2_pokemonsprites[0].sprites,
-            ).other?.['official-artwork'].front_default,
+            ).other?.['official-artwork'].front_default.replace(
+              '/media',
+              'https://raw.githubusercontent.com/PokeAPI/sprites/master',
+            ),
           }}
           style={styles.image}
           resizeMode={'contain'}

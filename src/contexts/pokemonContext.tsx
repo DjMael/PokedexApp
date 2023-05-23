@@ -5,13 +5,12 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import {IPokemonSpecie} from '../Interfaces/Responses/IPokemonSpecie';
 
 interface PokemonContextData {
   pokemon: IHomePokemons | undefined;
-  specie: IPokemonSpecie | undefined;
+  specie: IPokemonDescrpitSpecie | undefined;
   setPokemon: (pk: IHomePokemons) => void;
-  setSpecie: (pk: IPokemonSpecie) => void;
+  setSpecie: (pk: IPokemonDescrpitSpecie) => void;
 }
 
 export const PokemonContext = createContext<PokemonContextData>(
@@ -20,7 +19,7 @@ export const PokemonContext = createContext<PokemonContextData>(
 
 const PokemonProvider = ({children}: {children: ReactNode}) => {
   const [pokemon, setStatePokemon] = useState<IHomePokemons>();
-  const [specie, setStateSpecie] = useState<IPokemonSpecie>();
+  const [specie, setStateSpecie] = useState<IPokemonDescrpitSpecie>();
 
   const setPokemon = useCallback(
     (pk: IHomePokemons) => {
@@ -30,7 +29,7 @@ const PokemonProvider = ({children}: {children: ReactNode}) => {
   );
 
   const setSpecie = useCallback(
-    (pk: IPokemonSpecie) => {
+    (pk: IPokemonDescrpitSpecie) => {
       setStateSpecie(pk);
     },
     [setStateSpecie],
